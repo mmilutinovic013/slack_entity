@@ -15,25 +15,54 @@ function slack_entity_install() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'used' => array(
-        'description' => 'The Unix timestamp when the code was used.',
-        'type' => 'int',
+      'team_id' => array(
+        'type' => 'varchar',
+        'length' => 60,
         'not null' => FALSE,
         'default' => 0,
+        'description' => 'The identifier for a team in Slack',
       ),
-      'name' => array(
+      'channel_id' => array(
         'type' => 'varchar', // make everything 
+        'length' => 60,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The id of the Slack channel that the message is sent from.',
+      ),
+      'channel_name' => array(
+        'type' => 'varchar', // make everything 
+        'length' => 60,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The name of the Slack channel that the message is sent from.',
+      ),
+      'timestamp' => array(
+        'type' => 'int', // may have to change this to handle decimals or use a cast.
         'length' => 60,
         'not null' => FALSE,
         'default' => '',
         'description' => 'User name registering the code, can not be uid to allow external registration',
       ),
-      'granted' => array(
-        'type' => 'char',
-        'length' => 36,
-        'not null' => TRUE,
+      'user_id' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => FALSE,
         'default' => '',
-        'description' => 'The UUID of the item access has been granted to',
+        'description' => 'The user id of the user that the Slack message is sent from',
+      ),
+      'user_name' => array(
+        'type' => 'varchar',
+        'length' => 60,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The user name of the user that the Slack message is sent from',
+      ),
+      'text' => array(
+        'type' => 'longtext', // todo: verify that this is correct...
+        'length' => 60,
+        'not null' => FALSE,
+        'default' => '',
+        'description' => 'The user id of the user that the Slack message is sent from',
       ),
     ),
     'primary key' => array('acid'),
