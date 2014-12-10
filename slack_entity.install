@@ -1,9 +1,9 @@
 <?php
 function slack_entity_install() {
   $schema['slack_entity'] = array(
-    'description' => 'Stores the activation codes',
+    'description' => 'Stores the Slack Entity messages',
     'fields' => array(
-      'acid' => array(
+      'seid' => array(
         'description' => 'The internal primary identifier for activation code.',
         'type' => 'serial',
         'unsigned' => TRUE,
@@ -72,7 +72,7 @@ function slack_entity_install() {
         'description' => 'The user id of the user that the Slack message is sent from',
       ),
     ),
-    'primary key' => array('acid'),
+    'primary key' => array('seid'),
   );
   $schema['cache_entity_slack_entity'] = drupal_get_schema_unprocessed('system', 'cache');
   $schema['cache_entity_slack_entity']['description'] = "Cache table used to store slack_entity entity records.";
