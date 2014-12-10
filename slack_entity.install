@@ -4,7 +4,7 @@ function slack_entity_install() {
     'description' => 'Stores the Slack Entity messages',
     'fields' => array(
       'seid' => array(
-        'description' => 'The internal primary identifier for activation code.',
+        'description' => 'The internal primary identifier for Slack Entity.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
