@@ -248,54 +248,68 @@ function slack_entity_entity_property_info() {
   $info = array();
   // Add meta-data about the basic properties.
   $properties = &$info['slack_entity']['properties'];
-  $properties['acid'] = array(
+  $properties['seid'] = array(
     'label' => t("Slack Entity ID"),
     'type' => 'integer',
     'description' => t("The unique integer ID of the Slack Entity."),
-    'schema field' => 'acid',
+    'schema field' => 'seid',
   );
-  $properties['slack_entity'] = array(
-    'label' => t("Slack Entity"),
-    'type' => 'text',
-    'description' => t("slack_entity someone would enter, this is a UUID"),
-    'schema field' => 'slack_entity',
-  );
-  $properties['created'] = array(
-    'label' => t("Date created"),
-    'type' => 'date',
-    'description' => t("The date the slack_entity was created."),
+    $properties['created'] = array(
+    'label' => t("Created Date"), // does this need to be a date? It is an int type in the define
+    'type' => 'integer',
+    'description' => t("The Created Date of the Slack Entity."),
     'schema field' => 'created',
   );
-  $properties['used'] = array(
-    'label' => t("Date used"),
-    'type' => 'date',
-    'description' => t("The date the slack_entity was used."),
-     'getter callback' => 'entity_property_verbatim_get',
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer slack_entity',
-    'schema field' => 'used',
-  );
-  $properties['name'] = array(
-    'label' => t("Name"),
+  $properties['team_id'] = array(
+    'label' => t("Team ID"),
     'type' => 'text',
-    'description' => t("User name of person that used the slack_entity"),
-    'schema field' => 'name',
-    'getter callback' => 'entity_property_verbatim_get',
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer slack_entity',
+    'description' => t("team id someone would enter, this is a UUID"),
+    'schema field' => 'team_id',
   );
-  $properties['granted'] = array(
-    'label' => t("Granted access"),
+  $properties['channel_id'] = array(
+    'label' => t("Channel ID"),
     'type' => 'text',
-    'description' => t("What this slack_entity granted access to, this is also a UUID"),
-    'schema field' => 'granted',
-    'getter callback' => 'entity_property_verbatim_get',
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer slack_entity',
+    'description' => t("channel id someone would enter, this is a UUID"),
+    'schema field' => 'channel_id',
+  );
+  $properties['channel_name'] = array(
+    'label' => t("Channel Name"),
+    'type' => 'text',
+    'description' => t("Channel Name someone would enter, this is a UUID"),
+    'schema field' => 'channel_name',
+  );
+  $properties['timestamp'] = array(
+    'label' => t("Time Stamp"), // does this need to be a date? It is an int type in the define
+    'type' => 'integer',
+    'description' => t("The Created Date of the Slack Entity."),
+    'schema field' => 'timestamp',
+  );
+  $properties['user_id'] = array(
+    'label' => t("User ID"),
+    'type' => 'text',
+    'description' => t("User id someone would enter, this is a UUID"),
+    'schema field' => 'user_id',
+  );
+  $properties['user_name'] = array(
+    'label' => t("User Name"),
+    'type' => 'text',
+    'description' => t("team id someone would enter, this is a UUID"),
+    'schema field' => 'user_name',
+  );
+  $properties['text'] = array(
+    'label' => t("Text"),
+    'type' => 'text',
+    'description' => t("The message from slack"),
+    'schema field' => 'text',
+  );
+  $properties['trigger_word'] = array(
+    'label' => t("Trigger Word"),
+    'type' => 'text',
+    'description' => t("Trigger word someone would enter, this is a UUID"),
+    'schema field' => 'trigger_word',
   );
   return $info;
 }
-
 /**
  * Callback to build an Slack Entity
  */

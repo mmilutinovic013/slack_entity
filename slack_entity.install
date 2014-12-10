@@ -58,8 +58,7 @@ function slack_entity_install() {
         'description' => 'The user name of the user that the Slack message is sent from',
       ),
       'text' => array(
-        'type' => 'longtext', // todo: verify that this is correct...
-        'length' => 60, // also figure out the length.
+        'type' => 'text', // todo: verify that this is correct...
         'not null' => FALSE,
         'default' => '',
         'description' => 'The user id of the user that the Slack message is sent from',
