@@ -1,7 +1,4 @@
 name = Slack Entity
 description = Template to incorportate Slack webhook export data as an Entity. 
 core = 7.x
-package = Features
-dependencies[] = ctools
-features[features_api][] = api:1
-features[slack_entity][] = slack_entity
+
