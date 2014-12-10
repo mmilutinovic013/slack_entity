@@ -7,16 +7,16 @@
 /**
  * Implements hook_entity_info().
  */
-function activation_code_entity_info() {
-  $info['activation_code'] = array(
+function slack_entity_info() {
+  $info['slack'] = array(
     // A human readable label to identify our entity.
     'label' => t('Activation Code'),
     // The controller for our Entity - extends the Drupal core controller.
     'controller class' => 'ActivationCodeController',
     // The table defined in hook_schema()
-    'base table' => 'activation_code',
+    'base table' => 'slack',
     // Returns the uri elements of an entity
-    'uri callback' => 'activation_code_uri',
+    'uri callback' => 'slack_uri',
     // Fieldable that we can attach fields to it - the core functionality will
     // do the heavy lifting here.
     'fieldable' => TRUE,
@@ -28,18 +28,18 @@ function activation_code_entity_info() {
     'static cache' => TRUE,
     // Attach bundles - i.e. alternative configurations of fields associated with a main entity.
     'bundles' => array(
-      'activation_code' => array(
+      'slack' => array(
         'label' => 'Activation Code',
         // Information below is used by the Field UI - they "attach" themselves here and lets us
         // do the standard field management that all the core entities enjoy.
         'admin' => array(
-          'path' => 'admin/structure/activation_code/manage',
-          'access arguments' => array('administer activation_code'),
+          'path' => 'admin/structure/slack/manage',
+          'access arguments' => array('administer slack'),
         ),
       ),
     ),
     // module its from
-    'module' => 'activation_code',
+    'module' => 'slack',
     // View modes allow entities to be displayed differently based on context. We simply have one option
     // here but an alternative would be to have a Full and Teaser mode.
     'view modes' => array(
@@ -49,68 +49,68 @@ function activation_code_entity_info() {
       ),
     ),
     // access callback when entity invoked as object
-    'access callback' => 'activation_code_access',
-    'creation callback' => 'activation_code_create',
-    'save callback' => 'activation_code_save',
+    'access callback' => 'slack_access',
+    'creation callback' => 'slack_create',
+    'save callback' => 'slack_save',
   );
   // Support entity cache module.
-  $info['activation_code']['field cache'] = FALSE;
-  $info['activation_code']['entity cache'] = TRUE;
+  $info['slack']['field cache'] = FALSE;
+  $info['slack']['entity cache'] = TRUE;
 
   return $info;
 }
 
 /**
- * Fetch a activation_code object.
+ * Fetch a slack object.
  *
- * Make sure that the wildcard you choose in the activation_code
+ * Make sure that the wildcard you choose in the slack
  * entity definition fits the function name here.
  *
  * @param $code_id
- *   Integer specifying the activation_code entity id.
+ *   Integer specifying the slack entity id.
  * @param $reset
  *   A boolean indicating that the internal cache should be reset.
  * @return
  *   A fully-loaded $code object or FALSE if it cannot be loaded.
  *
- * @see activation_code_load_multiple()
+ * @see slack_load_multiple()
  */
-function activation_code_load($code_id = NULL, $reset = FALSE) {
+function slack_load($code_id = NULL, $reset = FALSE) {
   $code_ids = (isset($code_id) ? array($code_id) : array());
-  $code = activation_code_load_multiple($code_ids, array(), $reset);
+  $code = slack_load_multiple($code_ids, array(), $reset);
   return $code ? reset($code) : FALSE;
 }
 
 /**
- * Loads multiple activation_code entities based on certain conditions
+ * Loads multiple slack entities based on certain conditions
  */
-function activation_code_load_multiple($code_ids = array(), $conditions = array(), $reset = FALSE) {
-  return entity_load('activation_code', $code_ids, $conditions, $reset);
+function slack_load_multiple($code_ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('slack', $code_ids, $conditions, $reset);
 }
 
 /**
  * Implementing the uri callback defined
  */
-function activation_code_uri($code) {
+function slack_uri($code) {
   return array(
-    'path' => 'activation_code/' . $code->acid,
+    'path' => 'slack/' . $code->acid,
   );
 }
 
 /**
  * Implements hook_menu().
  */
-function activation_code_menu() {
+function slack_menu() {
 
   // The page to view our entities - needs to follow what
-  // is defined in activation_code_uri and will use load_activation_code to retrieve
+  // is defined in slack_uri and will use load_slack to retrieve
   // the necessary entity info.
-  $items['activation_code/%activation_code'] = array(
-    'title callback' => 'activation_code_page_title',
+  $items['slack/%slack'] = array(
+    'title callback' => 'slack_page_title',
     'title arguments' => array(1),
-    'page callback' => 'activation_code_page_view',
+    'page callback' => 'slack_page_view',
     'page arguments' => array(1),
-    'access callback' => 'activation_code_access',
+    'access callback' => 'slack_access',
     'access arguments' => array('view', 1),
     'type' => MENU_CALLBACK,
   );
@@ -121,16 +121,16 @@ function activation_code_menu() {
 /**
  * Implements hook_permission().
  */
-function activation_code_permission() {
+function slack_permission() {
     return array(
-    'administer activation_code' =>  array(
+    'administer slack' =>  array(
       'title' => t('Administer Activation Codes'),
       'restrict access' => TRUE,
     ),
-    'view activation_code' => array(
+    'view slack' => array(
       'title' => t('View Activation Codes'),
     ),
-    'create activation_code' => array(
+    'create slack' => array(
       'title' => t('Create Activation Codes'),
     ),
 
@@ -141,50 +141,50 @@ function activation_code_permission() {
 /**
  * Callback for title
  */
-function activation_code_page_title($code) {
+function slack_page_title($code) {
   return $code->code;
 }
 
 /**
  * Callback for displaying the entity
  */
-function activation_code_page_view($code, $view_mode = 'full') {
+function slack_page_view($code, $view_mode = 'full') {
   $code->content = array();
   // Build fields content - this where the FieldAPI really comes in to play. The task
   // is relatively trivial for us - it all gets taken care of by Drupal core.
-  field_attach_prepare_view('activation_code', array($code->acid => $code), $view_mode);
-  entity_prepare_view('activation_code', array($code->acid => $code));
-  $code->content += field_attach_view('activation_code', $code, $view_mode);
+  field_attach_prepare_view('slack', array($code->acid => $code), $view_mode);
+  entity_prepare_view('slack', array($code->acid => $code));
+  $code->content += field_attach_view('slack', $code, $view_mode);
   drupal_set_title($code->code);
 
   return $code->content;
 }
 
 /**
- * Creates an activation_code entity for us.
+ * Creates an slack entity for us.
  *
  * Simply intializing the main vars and sending us to a form.
  */
-function activation_code_add() {
-  $code = activation_code_create();
-  return drupal_get_form('activation_code_add_form', $code);
+function slack_add() {
+  $code = slack_create();
+  return drupal_get_form('slack_add_form', $code);
 }
 
 
 /**
- * We save the activation_code entity by calling the controller.
+ * We save the slack entity by calling the controller.
  */
-function activation_code_save(&$code) {
-  return entity_get_controller('activation_code')->save($code);
+function slack_save(&$code) {
+  return entity_get_controller('slack')->save($code);
 }
 
 /**
  * Implements hook_help().
  */
-function activation_code_help($path, $arg) {
+function slack_help($path, $arg) {
   switch ($path) {
-    case 'admin/help#activation_code':
-      return "<p>" . t('Once you have activated the module you can configure your entity bundle by visiting "admin/structure/activation_code/manage"') . "</p>";
+    case 'admin/help#slack':
+      return "<p>" . t('Once you have activated the module you can configure your entity bundle by visiting "admin/structure/slack/manage"') . "</p>";
   }
 }
 
@@ -201,10 +201,10 @@ function activation_code_help($path, $arg) {
  * @return boolean
  *   Whether access is allowed or not.
  */
-function activation_code_access($op, $item = NULL, $account = NULL) {
+function slack_access($op, $item = NULL, $account = NULL) {
   // allow administer permission to trump all others
   // this also will pass true for when no items are passed
-  if (user_access('administer activation_code', $account)) {
+  if (user_access('administer slack', $account)) {
     return TRUE;
   }
   // if no item is set, and not admin rights block access
@@ -212,7 +212,7 @@ function activation_code_access($op, $item = NULL, $account = NULL) {
     return FALSE;
   }
   // check for op rights
-  if (user_access($op . ' activation_code', $account)) {
+  if (user_access($op . ' slack', $account)) {
     return TRUE;
   }
   // they didn't have viewer rights
@@ -225,18 +225,18 @@ function activation_code_access($op, $item = NULL, $account = NULL) {
 class ActivationCodeController extends EntityCacheDefaultEntityController{
 
  /**
-  * Saves the activation_code entity mathching custom fields via drupal_write_record()
+  * Saves the slack entity mathching custom fields via drupal_write_record()
   */
   public function save($code) {
     // update vs insert
     if (!isset($code->acid)) {
-      drupal_write_record('activation_code', $code);
+      drupal_write_record('slack', $code);
     }
     else {
-      drupal_write_record('activation_code', $code, 'acid');
+      drupal_write_record('slack', $code, 'acid');
     }
-    field_attach_insert('activation_code', $code);
-    module_invoke_all('entity_insert', $code, 'activation_code');
+    field_attach_insert('slack', $code);
+    module_invoke_all('entity_insert', $code, 'slack');
     return $code;
   }
 }
@@ -244,10 +244,10 @@ class ActivationCodeController extends EntityCacheDefaultEntityController{
 /**
  * Implements hook_entity_property_info().
  */
-function activation_code_entity_property_info() {
+function slack_entity_property_info() {
   $info = array();
   // Add meta-data about the basic properties.
-  $properties = &$info['activation_code']['properties'];
+  $properties = &$info['slack']['properties'];
   $properties['acid'] = array(
     'label' => t("Activation Code ID"),
     'type' => 'integer',
@@ -272,7 +272,7 @@ function activation_code_entity_property_info() {
     'description' => t("The date the code was used."),
      'getter callback' => 'entity_property_verbatim_get',
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer activation_code',
+    'setter permission' => 'administer slack',
     'schema field' => 'used',
   );
   $properties['name'] = array(
@@ -282,7 +282,7 @@ function activation_code_entity_property_info() {
     'schema field' => 'name',
     'getter callback' => 'entity_property_verbatim_get',
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer activation_code',
+    'setter permission' => 'administer slack',
   );
   $properties['granted'] = array(
     'label' => t("Granted access"),
@@ -291,7 +291,7 @@ function activation_code_entity_property_info() {
     'schema field' => 'granted',
     'getter callback' => 'entity_property_verbatim_get',
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer activation_code',
+    'setter permission' => 'administer slack',
   );
   return $info;
 }
@@ -299,12 +299,12 @@ function activation_code_entity_property_info() {
 /**
  * Callback to build an activation code
  */
-function activation_code_create($values = array()) {
+function slack_create($values = array()) {
   // include uuid functions
   module_load_include('inc', 'uuid', 'uuid');
   $code = (object) array(
     'code' => uuid_generate(),
-    'type' => 'activation_code',
+    'type' => 'slack',
   );
   // Apply the given values.
   foreach ($values as $key => $value) {
