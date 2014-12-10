@@ -22,7 +22,7 @@ function slack_entity_entity_info() {
     'fieldable' => TRUE,
     // The unique key of our base table.
     'entity keys' => array(
-      'id' => 'acid',
+      'id' => 'seid',
     ),
     // FALSE disables caching -  caching functionality is handled by Drupal core
     'static cache' => TRUE,
@@ -93,7 +93,7 @@ function slack_entity_load_multiple($slack_entity_ids = array(), $conditions = a
  */
 function slack_entity_uri($slack_entity) {
   return array(
-    'path' => 'slack_entity/' . $slack_entity->acid,
+    'path' => 'slack_entity/' . $slack_entity->seid,
   );
 }
 
@@ -152,8 +152,8 @@ function slack_entity_page_view($slack_entity, $view_mode = 'full') {
   $slack_entity->content = array();
   // Build fields content - this where the FieldAPI really comes in to play. The task
   // is relatively trivial for us - it all gets taken care of by Drupal core.
-  field_attach_prepare_view('slack_entity', array($slack_entity->acid => $slack_entity), $view_mode);
-  entity_prepare_view('slack_entity', array($slack_entity->acid => $slack_entity));
+  field_attach_prepare_view('slack_entity', array($slack_entity->seid => $slack_entity), $view_mode);
+  entity_prepare_view('slack_entity', array($slack_entity->seid => $slack_entity));
   $slack_entity->content += field_attach_view('slack_entity', $slack_entity, $view_mode);
   drupal_set_title($slack_entity->slack_entity);
 
@@ -229,11 +229,11 @@ class Activationslack_entityController extends EntityCacheDefaultEntityControlle
   */
   public function save($slack_entity) {
     // update vs insert
-    if (!isset($slack_entity->acid)) {
+    if (!isset($slack_entity->seid)) {
       drupal_write_record('slack_entity', $slack_entity);
     }
     else {
-      drupal_write_record('slack_entity', $slack_entity, 'acid');
+      drupal_write_record('slack_entity', $slack_entity, 'seid');
     }
     field_attach_insert('slack_entity', $slack_entity);
     module_invoke_all('entity_insert', $slack_entity, 'slack_entity');
