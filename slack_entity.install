@@ -78,3 +78,28 @@ function slack_entity_install() {
   $schema['cache_entity_slack_entity']['description'] = "Cache table used to store slack_entity entity records.";
   return $schema;
 }
+
+function slack_entity_uninstall() {
+  // select all the fields associated to slack_entity entity type
+  $result = db_select('field_config_instance', 'fci')
+  ->fields('fci', array('field_name'))
+  ->condition('entity_type', 'slack_entity')
+  ->execute();
+  // delete from each table where the entity type matches
+  foreach ($result as $val) {
+    db_delete('field_data_' . $val->field_name)
+    ->condition('entity_type', 'slack_entity')
+    ->execute();
+  }
+}
+
+/**
+ * Add the {cache_entity_slack_entity} table.
+ */
+function slack_entity_update_7100() {
+  if (!db_table_exists('cache_entity_slack_entity')) {
+    $table = drupal_get_schema_unprocessed('system', 'cache');
+    $table['description'] = "Cache table used to store slack_entity entity records.";
+    db_create_table('cache_entity_slack_entity', $table);
+  }
+}
