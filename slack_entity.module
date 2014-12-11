@@ -12,7 +12,7 @@ function slack_entity_entity_info() {
     // A human readable label to identify our entity.
     'label' => t('Slack Entity'),
     // The controller for our Entity - extends the Drupal core controller.
-    'controller class' => 'Activationslack_entityController',
+    'controller class' => 'ActivationSlack_entityController',
     // The table defined in hook_schema()
     'base table' => 'slack_entity',
     // Returns the uri elements of an entity
@@ -211,9 +211,9 @@ function slack_entity_access($op, $item = NULL, $account = NULL) {
 }
 
 /**
- * Activationslack_entityController extends the DrupalDefaultEntityController
+ * ActivationSlack_entityController extends the DrupalDefaultEntityController
  */
-class Activationslack_entityController extends EntityCacheDefaultEntityController{
+class ActivationSlack_entityController extends EntityCacheDefaultEntityController{
 
  /**
   * Saves the slack_entity entity mathching custom fields via drupal_write_record()
