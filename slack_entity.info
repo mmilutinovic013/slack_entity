@@ -1,4 +1,6 @@
 name = Slack Entity
 description = Template to incorportate Slack webhook export data as an Entity. 
 core = 7.x
+dependencies[] = entity
+dependencies[] = entitycache
 
