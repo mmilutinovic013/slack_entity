@@ -123,10 +123,6 @@ function slack_entity_menu() {
  */
 function slack_entity_permission() {
     return array(
-    'administer slack_entity' =>  array(
-      'title' => t('Administer Slack Entitys'),
-      'restrict access' => TRUE,
-    ),
     'view slack_entity' => array(
       'title' => t('View Slack Entitys'),
     ),
@@ -202,11 +198,6 @@ function slack_entity_help($path, $arg) {
  *   Whether access is allowed or not.
  */
 function slack_entity_access($op, $item = NULL, $account = NULL) {
-  // allow administer permission to trump all others
-  // this also will pass true for when no items are passed
-  if (user_access('administer slack_entity', $account)) {
-    return TRUE;
-  }
   // if no item is set, and not admin rights block access
   if (!isset($item)) {
     return FALSE;
