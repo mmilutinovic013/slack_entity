@@ -12,7 +12,7 @@ function slack_entity_entity_info() {
     // A human readable label to identify our entity.
     'label' => t('Slack Entity'),
     // The controller for our Entity - extends the Drupal core controller.
-    'controller class' => 'ActivationSlackEntityController',
+    'controller class' => 'SlackEntityController',
     // The table defined in hook_schema()
     'base table' => 'slack_entity',
     // Returns the uri elements of an entity
