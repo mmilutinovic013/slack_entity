@@ -17,6 +17,8 @@ function slack_entity_entity_info() {
     'base table' => 'slack_entity',
     // Returns the uri elements of an entity
     'uri callback' => 'slack_entity_uri',
+    // Allows this Entity to be accessible  in views.
+    'views controller class' => 'EntityDefaultViewsController',
     // Fieldable that we can attach fields to it - the core functionality will
     // do the heavy lifting here.
     'fieldable' => TRUE,
@@ -306,14 +308,12 @@ function slack_entity_entity_property_info() {
  */
 function slack_entity_create($values = array()) {
   // include uuid functions
-  module_load_include('inc', 'uuid', 'uuid');
   $slack_entity = (object) array(
-    'slack_entity' => uuid_generate(),
     'type' => 'slack_entity',
   );
   // Apply the given values.
   foreach ($values as $key => $value) {
-    $slack_entity->$key = $value;
+    $slack_entity->{$key} = $value;
   }
   return $slack_entity;
 }
